@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.tost255.justone.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/home_fragment"/>
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.tost255.justone.ui.account.Account"
+        android:label="@string/menu_account"
+        tools:layout="@layout/account_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/nav_collections"
+        android:name="com.tost255.justone.ui.collections.Collections"
+        android:label="@string/menu_my_collections"
+        tools:layout="@layout/my_collections_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.tost255.justone.ui.settings.Settings"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/nav_opinion"
+        android:name="com.tost255.justone.ui.opinion.Opinion"
+        android:label="@string/menu_opinion"
+        tools:layout="@layout/opinion_fragment">
+    </fragment>
+    <fragment
+        android:id="@+id/nav_terms_of_condition"
+        android:name="com.tost255.justone.ui.terms_of_condition.TermsOfCond"
+        android:label="@string/menu_terms_of_cond"
+        tools:layout="@layout/term_cond_fragment" />
+</navigation>
