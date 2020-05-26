@@ -1,7 +1,9 @@
 package com.tost255.justone
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.widget.TextView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
@@ -13,6 +15,9 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +26,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user?.uid == null) {
+            val intentStart = Intent(this, StartActivity::class.java)
+            startActivity(intentStart)
+        }
+
+
+        //toDO: if there is not daily word fetch them
+
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -38,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_collections, R.id.nav_settings, R.id.nav_opinion, R.id.nav_terms_of_condition), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_login).text = user?.displayName
     }
 
     override fun onSupportNavigateUp(): Boolean {
