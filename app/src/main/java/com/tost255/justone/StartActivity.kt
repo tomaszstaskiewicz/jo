@@ -2,33 +2,46 @@ package com.tost255.justone
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
-import com.google.firebase.database.*
 import com.tost255.justone.utils.FirebaseHelper
 import kotlinx.android.synthetic.main.activity_start.*
 
 
 class StartActivity : AppCompatActivity() {
 
-    private lateinit var database: DatabaseReference
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
+        approve_reg_checkbox.setOnLongClickListener { openLink() }
+        google_sign_in_button.isEnabled = false
         google_sign_in_button.setOnClickListener {signIn()}
+        approve_reg_checkbox.setOnClickListener {clickOnCheckbox()}
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val animated = AnimatedVectorDrawableCompat.create(this, R.drawable.animation_start_screen)
+        animated?.registerAnimationCallback(object : Animatable2Compat.AnimationCallback() {
+            override fun onAnimationEnd(drawable: Drawable?) {
+                start_screen_small_animation.post { animated.start() }
+            }
+        })
+        start_screen_small_animation.setImageDrawable(animated)
+        animated?.start()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
-            val response = IdpResponse.fromResultIntent(data)
-
             if (resultCode == Activity.RESULT_OK) {
                 // Successfully signed in
                 checkFirstSignIn()
@@ -56,8 +69,21 @@ class StartActivity : AppCompatActivity() {
     }
 
     private fun checkFirstSignIn(){
-        val fbHelper = FirebaseHelper()
-        fbHelper.writeNewUsertoDb()
+        if (approve_reg_checkbox.isChecked) {
+            val fbHelper = FirebaseHelper()
+            fbHelper.writeNewUserToDb(approve_reg_checkbox.isChecked)
+        }
+    }
+
+    private fun clickOnCheckbox(){
+        google_sign_in_button.isEnabled = approve_reg_checkbox.isChecked
+    }
+
+    private fun openLink(): Boolean{
+        val openURL = Intent(Intent.ACTION_VIEW)
+        openURL.data = Uri.parse("https://www.regulaminy.pl")
+        startActivity(openURL)
+        return true
     }
 
     companion object {

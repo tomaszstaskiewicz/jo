@@ -6,11 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".StartActivity">
 
+    <CheckBox
+        android:id="@+id/approve_reg_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:gravity="center"
+        android:linksClickable="true"
+        android:maxLines="2"
+        android:text="@string/approve_regulations_checkbox"
+        app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints" />
+        android:layout_marginBottom="63dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="244dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginBottom="231dp"
+        android:contentDescription="@string/content_description_justone_word_daily"
+        app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/jo_logo" />
+
+    <ImageView
+        android:id="@+id/start_screen_small_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:src="@drawable/animation_start_screen"
+        app:layout_constraintBottom_toTopOf="@+id/approve_reg_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/animation_start_screen" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

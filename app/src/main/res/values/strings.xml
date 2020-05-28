@@ -12,4 +12,6 @@
     <string name="menu_settings">Ustawienia</string>
     <string name="menu_terms_of_cond">Regulaminy</string>
     <string name="nav_header_describe">Nauka angielskiego po słowie dziennie</string>
+    <string name="approve_regulations_checkbox">Akceptuję <a href="https://regulaminy.pl">regulaminy</a> (przytrzymaj, aby otworzyć).</string>
+    <string name="content_description_justone_word_daily">JustOne Word Daily</string>
 </resources>
