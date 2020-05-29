@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.tost255.justone.utils.FirebaseHelper
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,8 +34,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intentStart)
         }
 
+        //toDO: if there is not daily word
 
-        //toDO: if there is not daily word fetch them
+        // toDO: fetch them
+        FirebaseHelper().getNormalCard(1)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -50,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_collections, R.id.nav_account, R.id.nav_settings, R.id.nav_opinion, R.id.nav_terms_of_condition), drawerLayout)
+                R.id.nav_home, R.id.nav_collections, R.id.nav_account, R.id.nav_settings), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         navView.getHeaderView(0).findViewById<TextView>(R.id.nav_header_login).text = user?.displayName

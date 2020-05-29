@@ -6,6 +6,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tost255.justone.models.User
+import com.tost255.justone.models.DbCardLangSection
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.*
 
 class FirebaseHelper{
@@ -37,5 +40,38 @@ class FirebaseHelper{
             }
         }
         userRef.addValueEventListener(userListener)
+    }
+
+    fun getNormalCard(poz: Int) {
+        val lang = "en"
+        val myLang = "pl"
+        val cardRef = db.getReference("words").child(poz.toString())
+
+        val cardListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val card = JSONObject(dataSnapshot.value as Map<*,*>)
+                val langPart = (card.get(lang) as JSONObject)
+                val myLangPart = (card.get(myLang) as JSONObject)
+                val storage = StorageHelper()
+                storage.saveCardFromDb(DbCardLangSection(
+                    getKeyFromJsonObj(langPart, "word"),
+                    getKeyFromJsonObj(langPart, "imageUrl"),
+                    getKeyFromJsonObj(langPart, "definition"),
+                    langPart.get("phrases") as JSONArray,
+                    getKeyFromJsonObj(langPart, "musicUrl")),
+                    DbCardLangSection(getKeyFromJsonObj(myLangPart,"word")))
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                val b="aa"
+            }
+        }
+        cardRef.addValueEventListener(cardListener)
+
+    }
+
+    private fun getKeyFromJsonObj(o: JSONObject, key: String): String {
+        return if (o.has(key))
+            o.get(key) as String;
+        else ""
     }
 }
